@@ -3,6 +3,7 @@ package com.matr.mysqlaws.controller;
 
 import com.matr.mysqlaws.models.Lavadoras;
 import com.matr.mysqlaws.models.LoginRequest;
+import com.matr.mysqlaws.models.Pel;
 import com.matr.mysqlaws.models.Usuario;
 import com.matr.mysqlaws.repository.UsuarioDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,6 +154,18 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response); // Devuelve 404 si el usuario no existe
         }
     }
+
+
+
+
+    //PL
+
+    @GetMapping(value = "/pel")
+    public List<Pel> getPel() {
+
+        return usuarioDao.getPel();
+    }
+
 
 
 

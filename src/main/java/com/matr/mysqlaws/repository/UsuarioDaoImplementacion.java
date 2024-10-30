@@ -2,6 +2,7 @@ package com.matr.mysqlaws.repository;
 
 
 import com.matr.mysqlaws.models.Lavadoras;
+import com.matr.mysqlaws.models.Pel;
 import com.matr.mysqlaws.models.Usuario;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class UsuarioDaoImplementacion implements UsuarioDao  {
+public class UsuarioDaoImplementacion implements UsuarioDao {
 
 
     @PersistenceContext
@@ -25,12 +26,6 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
         String query = "FROM Usuario ";
         return entityManager.createQuery(query).getResultList();
     }
-
-
-
-
-
-
 
 
     @Override
@@ -48,20 +43,6 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Transactional
     public Usuario obtenerPorrfId(String rfid) {
         String query = "FROM Usuario WHERE rfid = :rfid";
@@ -69,13 +50,6 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
         typedQuery.setParameter("rfid", rfid);
         return typedQuery.getSingleResult();
     }
-
-
-
-
-
-
-
 
 
     @Transactional
@@ -102,24 +76,11 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
     }
 
 
-
-
-
-
-
-
-
-
-
     @Override
     public void registrar(Usuario usuario) {
 
         entityManager.merge(usuario); //inserta objeto usuario en la bd mssql
     }
-
-
-
-
 
 
     @Transactional
@@ -157,7 +118,6 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
     }
 
 
-
     @Override
     public Usuario obtenerPorRfId(String rfid) {
         try {
@@ -182,22 +142,41 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
 
                 // Obtiene el día actual
                 DayOfWeek diaSemana = LocalDate.now().getDayOfWeek();
+                if (rfid.equals("1661C187")) {
+                    if (diaSemana == DayOfWeek.MONDAY) {
+                        descuento = 55;
+                    } else if (diaSemana == DayOfWeek.TUESDAY) {
+                        descuento = 55;
+                    } else if (diaSemana == DayOfWeek.WEDNESDAY) {
+                        descuento = 50;
+                    } else if (diaSemana == DayOfWeek.THURSDAY) {
+                        descuento = 50;
+                    } else if (diaSemana == DayOfWeek.FRIDAY) {
+                        descuento = 60;
+                    } else if (diaSemana == DayOfWeek.SATURDAY) {
+                        descuento = 60;
+                    } else if (diaSemana == DayOfWeek.SUNDAY) {
+                        descuento = 60;
+                    }
 
-                // Verifica el día de la semana y ajusta el descuento
-                if (diaSemana == DayOfWeek.MONDAY) {
-                    descuento = 55;
-                } else if (diaSemana == DayOfWeek.TUESDAY) {
-                    descuento = 55;
-                } else if (diaSemana == DayOfWeek.WEDNESDAY) {
-                    descuento = 50;
-                } else if (diaSemana == DayOfWeek.THURSDAY) {
-                    descuento = 50;
-                } else if (diaSemana == DayOfWeek.FRIDAY) {
-                    descuento = 60;
-                } else if (diaSemana == DayOfWeek.SATURDAY) {
-                    descuento = 60;
-                } else if (diaSemana == DayOfWeek.SUNDAY) {
-                    descuento = 60;
+                } else {
+
+                    if (diaSemana == DayOfWeek.MONDAY) {
+                        descuento = 35;
+                    } else if (diaSemana == DayOfWeek.TUESDAY) {
+                        descuento = 35;
+                    } else if (diaSemana == DayOfWeek.WEDNESDAY) {
+                        descuento = 35;
+                    } else if (diaSemana == DayOfWeek.THURSDAY) {
+                        descuento = 35;
+                    } else if (diaSemana == DayOfWeek.FRIDAY) {
+                        descuento = 40;
+                    } else if (diaSemana == DayOfWeek.SATURDAY) {
+                        descuento = 40;
+                    } else if (diaSemana == DayOfWeek.SUNDAY) {
+                        descuento = 40;
+                    }
+
                 }
 
                 // Verifica si el saldo es suficiente para aplicar el descuento
@@ -227,9 +206,6 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
             return null;
         }
     }
-
-
-
 
 
     @Override
@@ -274,7 +250,7 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
                 System.out.println("El estado es ----->" + lavadoras.getEstado());
                 lavadoras = null;
 
-            }else{
+            } else {
                 return lavadoras;
             }
 
@@ -294,11 +270,21 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
     }
 
 
-
     @Override
     public void actualizarEstadoLavadoraPorId(String id) {
         String updateQuery = "UPDATE lavadoras SET estado = 0 WHERE id = 1";
         entityManager.createNativeQuery(updateQuery).executeUpdate();
+    }
+
+
+
+    // PL
+
+    @Override
+    @Transactional
+    public List<Pel> getPel() {
+        String query = "FROM Pel ";
+        return entityManager.createQuery(query).getResultList();
     }
 
 
